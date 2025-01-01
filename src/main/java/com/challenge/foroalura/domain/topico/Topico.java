@@ -1,6 +1,7 @@
 package com.challenge.foroalura.domain.topico;
 
 import com.challenge.foroalura.domain.curso.Curso;
+import com.challenge.foroalura.domain.topico.datos.TopicoUpdateDTO;
 import com.challenge.foroalura.domain.topico.respuesta.Respuesta;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import jakarta.persistence.*;
@@ -53,6 +54,12 @@ public class Topico {
         this.status = status;
         this.autor = usuario;
         this.curso = curso;
+    }
+
+    public void actualizarDatosTopico(TopicoUpdateDTO actualizarTopico) {
+        if (actualizarTopico.titulo() != null) this.titulo = actualizarTopico.titulo();
+        if (actualizarTopico.mensaje() != null) this.mensaje = actualizarTopico.mensaje();
+        if(actualizarTopico.status() != null) this.status = actualizarTopico.status();
     }
 
     // Getters y Setters

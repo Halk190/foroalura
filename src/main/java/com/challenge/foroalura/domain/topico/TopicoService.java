@@ -5,12 +5,15 @@ import com.challenge.foroalura.domain.curso.Curso;
 import com.challenge.foroalura.domain.curso.CursoRepository;
 import com.challenge.foroalura.domain.topico.datos.TopicoDTO;
 import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoResponseUpdateDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoUpdateDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidateDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidator;
 import com.challenge.foroalura.domain.usuario.Perfil;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import com.challenge.foroalura.domain.usuario.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 public class TopicoService {
@@ -88,6 +92,26 @@ public class TopicoService {
         return topicos.map(TopicoResponseDTO::new);
     }
 
+    public TopicoResponseUpdateDTO actualizar(Long id, @Valid TopicoUpdateDTO datos,Authentication authentication) {
+        // Obtener al usuario autenticado
+        Usuario usuarioActual = (Usuario) authentication.getPrincipal();
+
+        // Buscar el tópico por su ID, lanzar excepción si no existe
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tópico no encontrado"));
+
+        // Verificar si el usuario actual es el creador del tópico o tiene perfil ADMIN
+        if (!esUsuarioAutorizado(usuarioActual, topico)) {
+            throw new AccessDeniedException("No tienes permisos para actualizar este tópico");
+        }
+
+        // Actualizar los datos del tópico
+        topico.actualizarDatosTopico(datos);
+
+        // Retornar el DTO de respuesta con los datos actualizados
+        return new TopicoResponseUpdateDTO(topico);
+    }
+
     public String eliminarTopico(Long id, Authentication authentication) {
         // Obtener el usuario actual desde la autenticación
         Usuario usuarioActual = (Usuario) authentication.getPrincipal();
@@ -117,4 +141,12 @@ public class TopicoService {
         return usuarioActual.getPerfil() == Perfil.ADMIN || usuarioActual.getId().equals(topico.getAutor().getId());
     }
 
+    public TopicoResponseDTO detalleTopico(Long id) {
+        if(!topicoRepository.existsById(id)){
+            throw new ValidacionException("El topico no existe");
+        }
+        TopicoResponseDTO topico =topicoRepository.findById(id).map(TopicoResponseDTO::new).get();
+
+        return topico;
+    }
 }

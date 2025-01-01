@@ -3,6 +3,8 @@ package com.challenge.foroalura.controller;
 import com.challenge.foroalura.domain.topico.datos.TopicoDTO;
 import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
 import com.challenge.foroalura.domain.topico.TopicoService;
+import com.challenge.foroalura.domain.topico.datos.TopicoResponseUpdateDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +43,19 @@ public class TopicoController {
     public ResponseEntity<Page<TopicoResponseDTO>> listarTopicosPorCurso(@PageableDefault(size = 5,sort = "fechaCreacion", direction = Sort.Direction.ASC)
                                                                    Pageable paginacion,@PathVariable String nombreCurso){
         return ResponseEntity.ok(topicoService.listadoTopicosPorCurso(nombreCurso, paginacion));
+    }
+
+    //Detalles Topico
+    @GetMapping("/{id}")
+    public ResponseEntity<TopicoResponseDTO> detallesTopico(@PathVariable Long id){
+        return ResponseEntity.ok(topicoService.detalleTopico(id));
+    }
+
+    //Actualizar Topico
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity<TopicoResponseUpdateDTO> actualizarTopico(@PathVariable Long id, @RequestBody @Valid TopicoUpdateDTO datos,Authentication authentication){
+        return ResponseEntity.ok(topicoService.actualizar(id,datos,authentication));
     }
 
     //Eliminar Topico

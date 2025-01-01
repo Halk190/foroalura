@@ -1,6 +1,6 @@
 # Foro Alura
 
-![Foro Alura](https://via.placeholder.com/1200x400?text=Foro+Alura) <!-- Reemplaza este enlace con tu imagen -->
+![Foro Alura]([https://via.placeholder.com/1200x400?text=Foro+Alura](https://drive.google.com/file/d/1Gm0CVbtr964Qc2FxoxygM43SFCz0bAt8/view?usp=sharing)) <!-- Reemplaza este enlace con tu imagen -->
 
 ---
 

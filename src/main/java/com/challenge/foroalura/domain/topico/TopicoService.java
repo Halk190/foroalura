@@ -82,6 +82,12 @@ public class TopicoService {
         return topicos.map(TopicoResponseDTO::new);
     }
 
+    public Page<TopicoResponseDTO> listadoTopicosPorCurso(String nombre, Pageable pageable) {
+        Page<Topico> topicos = topicoRepository.findAllByCursoNombre(nombre, pageable);
+
+        return topicos.map(TopicoResponseDTO::new);
+    }
+
     public String eliminarTopico(Long id, Authentication authentication) {
         // Obtener el usuario actual desde la autenticación
         Usuario usuarioActual = (Usuario) authentication.getPrincipal();

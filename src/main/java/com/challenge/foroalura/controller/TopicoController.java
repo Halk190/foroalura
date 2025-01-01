@@ -36,6 +36,13 @@ public class TopicoController {
         return ResponseEntity.ok(topicoService.listadoTopico(paginacion));
     }
 
+    //Listar Topicos por Curso
+    @GetMapping("/curso/{nombreCurso}")
+    public ResponseEntity<Page<TopicoResponseDTO>> listarTopicosPorCurso(@PageableDefault(size = 5,sort = "fechaCreacion", direction = Sort.Direction.ASC)
+                                                                   Pageable paginacion,@PathVariable String nombreCurso){
+        return ResponseEntity.ok(topicoService.listadoTopicosPorCurso(nombreCurso, paginacion));
+    }
+
     //Eliminar Topico
     @Transactional
     @DeleteMapping("/{id}")

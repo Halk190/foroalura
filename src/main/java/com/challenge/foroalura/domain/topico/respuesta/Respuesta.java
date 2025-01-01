@@ -36,6 +36,7 @@ public class Respuesta {
 
     private Boolean solucion;
 
+    //Getter and Setter
     public Long getId() {
         return id;
     }

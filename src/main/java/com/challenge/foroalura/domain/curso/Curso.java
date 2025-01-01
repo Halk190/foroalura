@@ -22,17 +22,21 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "categoria")
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
 
-    public Curso(CursoDTO cursoDTO) {
-        this.nombre = cursoDTO.nombre();
-        this.categoria = cursoDTO.categoria();
+    public Curso(){}
+
+    public Curso(String nombre,Categoria categoria) {
+        this.nombre = nombre;
+        this.categoria = categoria;
     }
 
     // Getters y Setters

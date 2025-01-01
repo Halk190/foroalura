@@ -1,9 +1,7 @@
-package com.challenge.foroalura.domain.topico;
+package com.challenge.foroalura.domain.topico.datos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 public record TopicoDTO(
         @NotBlank
@@ -14,5 +12,7 @@ public record TopicoDTO(
         Long idUsuario,
         @NotBlank
         String nombreCurso
+        //@NotNull
+        //Long idCurso
 ) {
 }

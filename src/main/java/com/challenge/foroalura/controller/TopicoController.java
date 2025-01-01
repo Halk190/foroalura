@@ -1,7 +1,7 @@
 package com.challenge.foroalura.controller;
 
-import com.challenge.foroalura.domain.topico.TopicoDTO;
-import com.challenge.foroalura.domain.topico.TopicoResponseDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
 import com.challenge.foroalura.domain.topico.TopicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

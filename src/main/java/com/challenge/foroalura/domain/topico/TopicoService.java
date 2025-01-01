@@ -2,12 +2,15 @@ package com.challenge.foroalura.domain.topico;
 
 import com.challenge.foroalura.domain.curso.Curso;
 import com.challenge.foroalura.domain.curso.CursoRepository;
+import com.challenge.foroalura.domain.topico.datos.TopicoDTO;
+import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidateDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidator;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import com.challenge.foroalura.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -26,23 +29,27 @@ public class TopicoService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @Transactional
     public TopicoResponseDTO registrarTopico(TopicoDTO topicoDTO) {
-        // Crear el TopicoValidateDTO con solo el título y el mensaje para validación
+
+        //System.out.println("nombre del curso: " + topicoDTO.idCurso());
+
         TopicoValidateDTO topicoValidateDTO = new TopicoValidateDTO(topicoDTO.titulo(), topicoDTO.mensaje());
 
-        // Validar antes de proceder con el registro
         topicoValidator.validar(topicoValidateDTO);
 
-        // Obtener el Usuario desde el repositorio por ID
         Usuario usuario = usuarioRepository.findById(topicoDTO.idUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Obtener el Curso desde el repositorio por nombre
-        Curso curso = cursoRepository.findByNombre(topicoDTO.nombreCurso())
+        //Curso curso = cursoRepository.getReferenceById(topicoDTO.idCurso());
+
+        Curso curso = cursoRepository.findByNombre(topicoDTO.nombreCurso().trim().toLowerCase())
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+
 
         // Obtener la fecha actual de creación
         LocalDateTime fechaCreacion = LocalDateTime.now();
+        Integer respuestas = 0;
 
         // Crear el nuevo tópico con todos los datos del DTO
         Topico topico = new Topico(
@@ -58,14 +65,7 @@ public class TopicoService {
         topicoRepository.save(topico);
 
         // Crear el DTO de respuesta
-        return new TopicoResponseDTO(
-                topico.getId(),
-                topico.getTitulo(),
-                topico.getMensaje(),
-                usuario.getUsername(),
-                curso.getNombre(),
-                fechaCreacion
-        );
+        return new TopicoResponseDTO(topico);
     }
 
 

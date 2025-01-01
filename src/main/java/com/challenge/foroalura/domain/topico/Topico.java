@@ -43,6 +43,18 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas;
 
+    public Topico() {
+    }
+
+    public Topico(TopicoDTO topicoDTO,Usuario usuario,Curso curso) {
+        this.titulo = topicoDTO.titulo();
+        this.mensaje = topicoDTO.mensaje();
+        this.fechaCreacion = topicoDTO.fechadecreacion();
+        this.status = topicoDTO.status();
+        this.autor = usuario;
+        this.curso = curso;
+    }
+
     // Getters y Setters
     public Long getId() {
         return id;

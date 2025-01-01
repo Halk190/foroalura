@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,8 +31,16 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TopicoResponseDTO>> listarTopico(@PageableDefault(size = 5,
+    public ResponseEntity<Page<TopicoResponseDTO>> listarTopico(@PageableDefault(size = 10,
             sort = "fechaCreacion", direction = Sort.Direction.ASC) Pageable paginacion) {
         return ResponseEntity.ok(topicoService.listadoTopico(paginacion));
+    }
+
+    //Eliminar Topico
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarTopico(@PathVariable Long id, Authentication authentication) {
+        String mensaje = topicoService.eliminarTopico(id, authentication);
+        return ResponseEntity.ok(mensaje);
     }
 }

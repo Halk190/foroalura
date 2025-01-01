@@ -1,6 +1,9 @@
 
 package com.challenge.foroalura.infra.security;
 
+import com.challenge.foroalura.domain.topico.TopicoRepository;
+import com.challenge.foroalura.domain.usuario.Perfil;
+import com.challenge.foroalura.domain.usuario.Usuario;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +26,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenService tokenService;
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @Autowired
+    private TopicoRepository topicoRepo;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

@@ -1,16 +1,22 @@
 package com.challenge.foroalura.domain.topico;
 
+import com.challenge.foroalura.domain.ValidacionException;
 import com.challenge.foroalura.domain.curso.Curso;
 import com.challenge.foroalura.domain.curso.CursoRepository;
 import com.challenge.foroalura.domain.topico.datos.TopicoDTO;
 import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidateDTO;
 import com.challenge.foroalura.domain.topico.validacion.TopicoValidator;
+import com.challenge.foroalura.domain.usuario.Perfil;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import com.challenge.foroalura.domain.usuario.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +80,35 @@ public class TopicoService {
         Page<Topico> topicos = topicoRepository.findAll(pageable);
 
         return topicos.map(TopicoResponseDTO::new);
+    }
+
+    public String eliminarTopico(Long id, Authentication authentication) {
+        // Obtener el usuario actual desde la autenticación
+        Usuario usuarioActual = (Usuario) authentication.getPrincipal();
+
+        // Buscar el tópico por id
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tópico no encontrado"));
+
+        // Verificar si el usuario actual es el creador del tópico o si es administrador
+        if (!esUsuarioAutorizado(usuarioActual, topico)) {
+            throw new AccessDeniedException("No tienes permisos para eliminar este tópico");
+        }
+
+        // Eliminar el tópico
+        topicoRepository.delete(topico);
+
+        // Devolver el mensaje adecuado según quien realizó la eliminación
+        if (usuarioActual.getPerfil() == Perfil.ADMIN) {
+            return "El tópico fue eliminado por un administrador.";
+        } else {
+            return "El tópico fue eliminado por su autor.";
+        }
+    }
+
+    private boolean esUsuarioAutorizado(Usuario usuarioActual, Topico topico) {
+        // Verificar si el usuario es ADMIN o si es el creador del tópico
+        return usuarioActual.getPerfil() == Perfil.ADMIN || usuarioActual.getId().equals(topico.getAutor().getId());
     }
 
 }

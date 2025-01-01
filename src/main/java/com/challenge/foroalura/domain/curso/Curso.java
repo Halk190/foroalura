@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.swing.*;
 import java.util.List;
 
 @Table(name = "cursos")
@@ -22,7 +23,9 @@ public class Curso {
     private Long id;
 
     private String nombre;
-    private String categoria;
+
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
@@ -44,11 +47,11 @@ public class Curso {
         this.nombre = nombre;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 

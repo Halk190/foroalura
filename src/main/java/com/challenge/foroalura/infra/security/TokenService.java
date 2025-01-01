@@ -17,14 +17,14 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    @Value("${api.security.secret}")
+    @Value("${foroalura.security.secret}")
     private String apiSecret;
 
     public String generarToken(Usuario usuario){
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
-                    .withIssuer("voll med")
+                    .withIssuer("foro alura")
                     .withSubject(usuario.getUsername())
                     .withClaim("id", usuario.getId())
                     .withExpiresAt(generarFechaExpiracion())

@@ -30,6 +30,11 @@ public class Curso {
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
 
+    public Curso(CursoDTO cursoDTO) {
+        this.nombre = cursoDTO.nombre();
+        this.categoria = cursoDTO.categoria();
+    }
+
     // Getters y Setters
     public Long getId() {
         return id;

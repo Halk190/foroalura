@@ -4,6 +4,7 @@ import com.challenge.foroalura.domain.curso.Curso;
 import com.challenge.foroalura.domain.topico.respuesta.Respuesta;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,14 +44,11 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas;
 
-    public Topico() {
-    }
-
-    public Topico(TopicoDTO topicoDTO,Usuario usuario,Curso curso) {
-        this.titulo = topicoDTO.titulo();
-        this.mensaje = topicoDTO.mensaje();
-        this.fechaCreacion = topicoDTO.fechadecreacion();
-        this.status = topicoDTO.status();
+    public Topico(String titulo,String mensaje,LocalDateTime fechadecreacion,Boolean status,Usuario usuario,Curso curso) {
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.fechaCreacion = fechadecreacion;
+        this.status = status;
         this.autor = usuario;
         this.curso = curso;
     }

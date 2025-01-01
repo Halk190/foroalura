@@ -10,8 +10,6 @@ public record TopicoDTO(
         String titulo,
         @NotBlank
         String mensaje,
-        LocalDateTime fechadecreacion,
-        Boolean status,
         @NotNull
         Long idUsuario,
         @NotBlank

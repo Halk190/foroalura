@@ -33,19 +33,6 @@ public class TokenService {
             throw new RuntimeException();
         }
     }
-/*
-* try {
-            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
-            return JWT.create()
-                    .withIssuer("voll med")
-                    .withSubject(usuario.getUsername())
-                    .withClaim("id", usuario.getId())
-                    .withExpiresAt(generarFechaExpiracion())
-                    .sign(algorithm);
-        } catch (JWTCreationException exception){
-            throw new RuntimeException();
-        }
-* */
 
     public String getSubject(String token){
         //DecodedJWT verifier = null;
@@ -55,7 +42,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer("voll med")
+                    .withIssuer("foro alura")
                     .build();
                     //.verify(token);
             //verifier.getSubject();

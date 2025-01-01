@@ -9,6 +9,8 @@ import com.challenge.foroalura.domain.topico.validacion.TopicoValidator;
 import com.challenge.foroalura.domain.usuario.Usuario;
 import com.challenge.foroalura.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,5 +70,10 @@ public class TopicoService {
         return new TopicoResponseDTO(topico);
     }
 
+    public Page<TopicoResponseDTO> listadoTopico(Pageable pageable) {
+        Page<Topico> topicos = topicoRepository.findAll(pageable);
+
+        return topicos.map(TopicoResponseDTO::new);
+    }
 
 }

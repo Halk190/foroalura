@@ -5,11 +5,12 @@ import com.challenge.foroalura.domain.topico.datos.TopicoResponseDTO;
 import com.challenge.foroalura.domain.topico.TopicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/topico")
@@ -25,5 +26,11 @@ public class TopicoController {
 
         // Retornamos la respuesta como un ResponseEntity
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<TopicoResponseDTO>> listarTopico(@PageableDefault(size = 5,
+            sort = "fechaCreacion", direction = Sort.Direction.ASC) Pageable paginacion) {
+        return ResponseEntity.ok(topicoService.listadoTopico(paginacion));
     }
 }

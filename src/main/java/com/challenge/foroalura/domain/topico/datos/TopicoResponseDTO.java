@@ -1,6 +1,6 @@
 package com.challenge.foroalura.domain.topico.datos;
 
-import com.challenge.foroalura.domain.curso.CursoResponseDTO;
+import com.challenge.foroalura.domain.curso.datos.CursoResponseDTO;
 import com.challenge.foroalura.domain.topico.Topico;
 
 import java.time.LocalDateTime;

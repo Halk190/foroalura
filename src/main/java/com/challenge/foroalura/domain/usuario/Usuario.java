@@ -42,6 +42,15 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas;
 
+    public Usuario(){}
+
+    public Usuario(String nombre,String correoElectronico, String contrasena,Perfil perfil) {
+        this.nombre = nombre;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
+        this.perfil = perfil;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));

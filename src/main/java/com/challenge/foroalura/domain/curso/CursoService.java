@@ -1,5 +1,7 @@
 package com.challenge.foroalura.domain.curso;
 
+import com.challenge.foroalura.domain.curso.datos.CursoDTO;
+import com.challenge.foroalura.domain.curso.datos.CursoResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

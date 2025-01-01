@@ -1,4 +1,6 @@
-package com.challenge.foroalura.domain.curso;
+package com.challenge.foroalura.domain.curso.datos;
+
+import com.challenge.foroalura.domain.curso.Curso;
 
 public record CursoResponseDTO(
         Long id,

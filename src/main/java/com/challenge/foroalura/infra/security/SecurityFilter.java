@@ -28,11 +28,11 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         var tokenJWT = recuperarToken(request);
-        System.out.println("Llego el token? " + tokenJWT);
+        //System.out.println("Llego el token? " + tokenJWT);
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
-            System.out.println("tengo el subject? " + subject);
+            //System.out.println("tengo el subject? " + subject);
             var usuario = usuarioRepo.findByNombre(subject);
 
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null,

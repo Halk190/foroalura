@@ -1,8 +1,7 @@
 package com.challenge.foroalura.controller;
 
-import com.challenge.foroalura.domain.curso.CursoDTO;
-import com.challenge.foroalura.domain.curso.CursoRepository;
-import com.challenge.foroalura.domain.curso.CursoResponseDTO;
+import com.challenge.foroalura.domain.curso.datos.CursoDTO;
+import com.challenge.foroalura.domain.curso.datos.CursoResponseDTO;
 import com.challenge.foroalura.domain.curso.CursoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

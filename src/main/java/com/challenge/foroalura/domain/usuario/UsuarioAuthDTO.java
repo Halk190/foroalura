@@ -1,12 +1,11 @@
-package com.challenge.foroalura.domain.curso;
+package com.challenge.foroalura.domain.usuario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record CursoDTO(
+public record UsuarioAuthDTO(
         @NotBlank
         String nombre,
-        @NotNull
-        Categoria categoria
-) {
+        @NotBlank
+        String contrasena) {
 }
